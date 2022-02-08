@@ -172,6 +172,11 @@ class Pix2PixModel(torch.nn.Module):
         pred_fake, pred_real = self.discriminate(
             input_semantics, fake_image, real_image)
 
+        if False:  # Test values for loss function
+            torch.random.manual_seed(1)
+            pred_real = torch.normal(0, 1, (2, 1, 10, 10)).cuda()
+            pred_fake = torch.normal(0, 1, (2, 1, 10, 10)).cuda()
+
         D_losses['D_Fake'] = self.criterionGAN(pred_fake, False,
                                                for_discriminator=True)
         D_losses['D_real'] = self.criterionGAN(pred_real, True,
